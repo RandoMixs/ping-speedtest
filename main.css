@@ -33,6 +33,7 @@ body {
 	text-align:center;
 	font-family: 'Roboto Condensed', sans-serif;
 	font-size:18px;
+    transition: background .3s;
 }
 
 .servers.container {

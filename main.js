@@ -16,7 +16,7 @@ $.getJSON('servers.json', (data) => {
 			connection.onmessage = function (e) {
 				if(e['data'].match('PONG')) {
 					var latency = (Date.now()) - start;
-					$('.server.box[server-id="' + server['id'] + '"] .server.latency').text(latency + ' ms');
+					$('.server.box[server-id="' + server['id'] + '"] .server.latency').text(latency + ' ms').css('background',(latency > 100 ? '#ffb2b4' : (latency > 50 ? '#ffe8bd':'#fff')));
 					ok = false;
 				}
 			};
