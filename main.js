@@ -1,6 +1,6 @@
 $.getJSON('servers.json', (data) => {
 	if(data) {
-		function e() {$('.server.box[server-id="' + server['id'] + '"] .server.latency').text('? ms').css('background','#ffb2b4')}
+		function e(server) {$('.server.box[server-id="' + server['id'] + '"] .server.latency').text('? ms').css('background','#ffb2b4')}
 		data.forEach((server) => {
 			if(server['cc'] != "BR") return;
 			$('.servers.container').append('<div class="server box" server-id="' + server['id'] + '"><div class="server name">' + server['sponsor'].replace('-','') + '</div><div class="server location">' + server['name'] + '</div><div class="server latency">0 ms</div></div>');
@@ -14,8 +14,8 @@ $.getJSON('servers.json', (data) => {
 					connection.send('PING ' + start);
 				}, 500);
 			};
-			connection.onerror = e;
-			connection.onclose = e;
+			connection.onerror = function () {e(server)};
+			connection.onclose = function () {e(server)};
 			connection.onmessage = function (e) {
 				if(e['data'].match('PONG')) {
 					var latency = (Date.now()) - start;
