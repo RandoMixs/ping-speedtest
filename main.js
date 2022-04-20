@@ -1,5 +1,5 @@
 var arr = [];
-$.getJSON(((window.location.search).split('server=')[1]=="claro"?'servers-claro.json':'servers.json', (data) => {
+$.getJSON((window.location.search).split('server=')[1]=='claro'?'servers-claro.json':'servers.json', (data) => {
 	if(data) {
 		data.forEach((server, i) => {
 			if(server['cc'] != "BR") return;
