@@ -1,7 +1,17 @@
 var arr = [];
-$.getJSON((window.location.search).split('server=')[1]=='claro'?'servers-claro.json':'servers.json', (data) => {
+$.getJSON('servers.json', async data => {
 	if(data) {
-		data.forEach((server, i) => {
+		var tratamento = function (i,server) {
+			$(`.server.box[server-id="${server.id}"]`).css('opacity','.5').find('.server.latency').text('? ms').css('background','#ffb2b4');
+			arr[i]['reconnect']++;
+			if(arr[i]['reconnect'] <= 5){
+				arr[i]['func']()
+			} else {
+				$(`.server.box[server-id="${server.id}"] .server.latency`).css('background','#ff8589')
+			}
+		};
+
+		for await(let [i, server] of Object.entries(data)) {
 			if(server['cc'] != "BR") return;
 			$('.servers.container').append(`<div class="server box" server-id="${server.id}"><div class="server name">${server.sponsor.replace('-','')}</div><div class="server location">${server.name}</div><div class="server latency" style="background:#ffb2b4">? ms</div></div>`);
 			arr[i] = {
@@ -18,18 +28,19 @@ $.getJSON((window.location.search).split('server=')[1]=='claro'?'servers-claro.j
 							connection.send('PING '+start);
 						}, 500);
 					};
-					connection.onerror = function () {$(`.server.box[server-id="${server.id}"] .server.latency`).text('? ms').css('background','#ffb2b4');arr[i]['reconnect']++;if(arr[i]['reconnect']<=5){arr[i]['func']()}else{$(`.server.box[server-id="${server.id}"] .server.latency`).css('background','#ff8589')}};
-					connection.onclose = function () {$(`.server.box[server-id="${server.id}"] .server.latency`).text('? ms').css('background','#ffb2b4');arr[i]['reconnect']++;if(arr[i]['reconnect']<=5){arr[i]['func']()}else{$(`.server.box[server-id="${server.id}"] .server.latency`).css('background','#ff8589')}};
+					connection.onerror = () => tratamento(i,server);
+					connection.onclose = () => tratamento(i,server);
 					connection.onmessage = function (e) {
 						if(e['data'].match('PONG')) {
 							var latency = (Date.now()) - start;
-							$(`.server.box[server-id="${server.id}"] .server.latency`).text(`${latency} ms`).css('background',(latency>100?'#ffb2b4':(latency>50?'#ffe8bd':'#fff')));
+							$(`.server.box[server-id="${server.id}"]`).css('opacity','1').find('.server.latency').text(`${latency} ms`).css('background', (latency > 80 ? '#ffb2b4' : (latency > 50 ? '#ffe8bd' : '#fff')));
 							ok = false;
 						}
 					};
 				}
 			};
-		});
+		}
+
 		for (i = 0; i < arr.length; i++) {
 			arr[i]['func']();
 		};
