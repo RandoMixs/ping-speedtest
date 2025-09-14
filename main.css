@@ -1,69 +1,156 @@
 body {
-	background: #efefef;
-}
-
-.server.box {
-	background: #fff;
-	margin: 5px;
-	border: 1px solid #313131;
-	transition: width .3s, opacity .4s;
-	opacity: .5;
-}
-
-.server.name {
-	padding: 8px 0;
-	text-align: center;
-	background:#313131;
-	font-family: 'Open Sans', sans-serif;
+	min-height: 100vh;
+	margin: 0;
+	background: #000;
+	font-family: "Roboto", sans-serif;
 	color: #fff;
 }
 
-.server.location {
-	padding: 5px 0;
-	text-align: center;
-	background: #ffd400;
-	font-size: 14px;
-	border-bottom: 1px solid #313131;
-	font-family: 'Roboto', sans-serif;
+.container {
+	display: flex;
+	box-sizing: border-box;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 15px 0;
+	min-height: 100vh;
+	gap: 18px;
+	transition: gap .4s;
 }
 
-.server.latency {
-	padding: 12px 0;
-	text-align: center;
-	font-family: 'Roboto Condensed', sans-serif;
-	font-size: 18px;
-    transition: background .3s;
-}
-
-.servers.container {
-	position: relative;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	display: grid;
-    grid-template-columns: auto auto auto auto auto;
+.server-select {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: #303030;
+	border-radius: 18px;
+	width: 100%;
+	height: 120px;
+	overflow: hidden;
 	max-width: 1080px;
-	width: 90vw;
+	gap: 5px;
+	transition: height .4s, box-shadow .3s, opacity .4s;
 }
 
-@media screen and (max-width: 1090px), screen and (max-height: 870px) {
-	.servers.container {
-		top: auto;
-		left: 50%;
-		transform: translateX(-50%);
-	}
+.server-select .name {
+	text-align: center;
+	font-size: 18px;
+	font-weight: 600;
+	color: #fff;
+	letter-spacing: 0.7px;
+}
+
+.server-select .select {
+	outline: none;
+	border: 1.5px solid #23223a;
+	border-radius: 10px;
+	padding: 12px 18px;
+	min-width: 240px;
+	text-align: center;
+	background: #fff;
+	color: #000;
+	font-size: 16px;
+	font-weight: 700;
+	box-shadow: 0 2px 12px 0 #23223a22;
+	transition: border .2s, box-shadow .2s;
+	margin-top: 6px;
+}
+.server-select .select:focus {
+	border: 1.5px solid #00cfff;
+	box-shadow: 0 0 0 2px #00cfff33;
+}
+
+.server-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	gap: 18px;
+	max-width: 1080px;
+	width: 95vw;
+	margin: 0 auto;
+}
+
+.server-container .server.box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: #18181c;
+	border: 1px solid #222;
+	border-radius: 14px;
+	box-shadow: none;
+	transition: box-shadow .3s, opacity .4s;
+	opacity: .92;
+	overflow: hidden;
+}
+
+.server-container .server .name {
+	text-align: center;
+	background: #101014;
+	color: #7f7fff;
+	display: block;
+	width: 100%;
+	font-size: 17px;
+	font-weight: 700;
+	padding: 8px 0 6px 0;
+	border-radius: 14px 14px 0 0;
+	letter-spacing: 0.5px;
+}
+
+.server-container .server .location {
+	padding: 6px 0 5px 0;
+	text-align: center;
+	background: #303030;
+	font-size: 16px;
+	border-bottom: 1px solid #222;
+	display: block;
+	width: 100%;
+	font-weight: 600;
+	letter-spacing: 0.2px;
+	color: #fff;
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+}
+
+.server-container .server .location img {
+	width: 16px;
+	height: 16px;
+	border-radius: 4px;
+}
+
+.server-container .server .latency {
+	display: block;
+	width: 100%;
+	padding: 14px 0 10px 0;
+	text-align: center;
+	font-size: 19px;
+	font-weight: 600;
+	transition: background .3s;
+	color: #000;
+}
+
+.server-container .server.box:hover, .server-select:hover {
+	box-shadow: 0 0 0 2px #7f7fff;
+	opacity: 1;
 }
 
 @media screen and (max-width: 1090px) {
-	.servers.container {
-		grid-template-columns: auto auto auto;
+	.server-container {
+		grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+		max-width: 600px;
+	}
+	.server-select {
 		max-width: 600px;
 	}
 }
 
-@media screen and (max-width: 550px) {
-	.servers.container {
-		grid-template-columns: auto;
-		max-width: 250px;
+@media screen and (max-width: 700px) {
+	.container {
+		margin: 9px 0;
+		gap: 18px;
+	}
+
+	.server-select {
+		width: 95vw;
 	}
 }
