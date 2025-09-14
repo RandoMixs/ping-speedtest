@@ -35,7 +35,7 @@ function loadServers(provider) {
 
 			for await(let [i, server] of Object.entries(data)) {
 				if(sessionToken !== currentSession) return;
-				$('.server-container').append(`<div class="server box" server-id="${server.id}"><div class="location"><img src="flags/${server.cc}.svg" alt="${server.cc}"><span>${server.name}</span></div><div class="latency" style="background:#ffb2b4">? ms</div></div>`);
+				$('.server-container').append(`<div class="server box" server-id="${server.id}"><div class="location"><img src="flags/${(server.cc || '').toLowerCase()}.svg" alt="${server.cc}"><span>${server.name}</span></div><div class="latency" style="background:#ffb2b4">? ms</div></div>`);
 				arr[i] = {
 					'reconnect': 0,
 					'func': function () {
